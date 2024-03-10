@@ -29,9 +29,9 @@ class UserController extends Controller
         ]);
         if (Auth::attempt($validated)) {
             $request->session()->regenerate();
-            return 'correct';
+            return true;
         } else {
-            return 'incorrect';
+            return false;
         }
     }
 

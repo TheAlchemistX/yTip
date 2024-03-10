@@ -30,21 +30,33 @@ class PostController extends Controller
 
     public function readSort(Request $request, Post $post)
     {
-        $sort = $request->query();
-        $result = $post->orderBy($sort[key($sort)], key($sort))->simplePaginate(10);
-        return response($result, 200);
+        try{
+            $sort = $request->query();
+            $result = $post->orderBy($sort[key($sort)], key($sort))->simplePaginate(10);
+            return response($result, 200);
+        }catch (\Exception $error){
+            return  response('incorrect param', 400);
+        }
     }
     public function readFilter(Request $request, Post $post)
     {
-        $sort = $request->query();
-        $result = $post->where(key($sort), $sort[key($sort)])->simplePaginate(10);
-        return response($result, 200);
+        try{
+            $sort = $request->query();
+            $result = $post->where(key($sort), $sort[key($sort)])->simplePaginate(10);
+            return response($result, 200);
+        }catch (\Exception $error){
+            return  response('incorrect param', 400);
+        }
     }
     public function readGet(Request $request, Post $post)
     {
-        $sort = $request->query();
-        $fields = explode(',', $sort['fields']);
-        return response($post->select($fields)->simplePaginate(10));
+        try{
+            $sort = $request->query();
+            $fields = explode(',', $sort['fields']);
+            return response($post->select($fields)->simplePaginate(10));
+        }catch (\Exception $error){
+            return  response('incorrect param', 400);
+        }
     }
 
     public function update(Request $request, Post $postId)
